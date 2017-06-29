@@ -1,15 +1,10 @@
-stacksize('max') // Enlarge stack size, since testing with different mashines showed 
+// Please uncomment the following line in case of scilab 5.5.2 or earlier
+// stacksize('max') // Enlarge stack size, since testing with different mashines showed 
                  //  that it could be the case when default stack size is not enough
 clc 
 clear
 
 function [V0, c1, c2] = Heston_EuCall_MC_Euler(S0, r, gamma0, kappa, lambda, sigma_tilde, T, g, M, m)
-    
-    clf
-    scf(0)
-    xtitle('Simulated paths of Eu Call Option for ' + string(m) + ' steps', 'm', 'V')
-    
-    V_hat = []                      // Define vectore for Monte Carlo estimates
 
     // Set the increment for equidistance grid
     delta_t = T / m
@@ -19,7 +14,9 @@ function [V0, c1, c2] = Heston_EuCall_MC_Euler(S0, r, gamma0, kappa, lambda, sig
     delta_W_vol = grand(m, M, 'nor', 0, sqrt(delta_t))
     delta_W_S = grand(m, M, 'nor', 0, sqrt(delta_t))
         
-    // Define vector to store volatility and stock price paths 
+    // Define vector to store volatility and stock price paths
+    Vol_Euler = zeros(m, M)
+    S_Euler = zeros(m, M) 
     Vol_Euler(1, 1 : M) = gamma0
     S_Euler(1, 1 : M) = S0
         
@@ -58,6 +55,8 @@ function payoff = g(S)
     
 endfunction
 
+
+// Test Data
 S0=100 
 r=0.05 
 gamma0=0.2^2 
@@ -70,5 +69,6 @@ R=3
 m = 250
 M = 10000
 
+// Call Function with test data
 [V0, c1, c2] = Heston_EuCall_MC_Euler(S0, r, gamma0, kappa, lambda, sigma_tilde, T, g, M, m)
 disp("Price of the European Call in the Heston model " + string(V0))
