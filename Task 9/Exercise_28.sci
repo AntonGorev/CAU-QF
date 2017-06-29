@@ -1,3 +1,5 @@
+stacksize('max') // Enlarge stack size, since testing with different mashines showed 
+                 //  that it could be the case when default stack size is not enough
 clc 
 clear
 
