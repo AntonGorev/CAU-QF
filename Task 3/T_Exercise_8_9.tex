@@ -1,0 +1,61 @@
+\documentclass[11pt]{article}
+
+\usepackage{mathrsfs}
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\lhead{CompFin, Problem Set 3}
+\chead{}
+\rhead{Quantitative Finance (CAU), SS2017}
+
+
+\begin{document}
+
+\begin{enumerate} % 1, 2, 3
+\item T-Exercise 8 (American put option in the CRR model)
+\\[5pt] $X(t)$ and $Y(t)$ are functions of both t and W(t), so use (3.9) for that: 
+\\[5pt] $df(X(t))=\bigg(\partial_1 f(t, X(t)) +  \partial_2 f(t,X(t))\mu(t) + \frac{1}{2}\partial_{22}f(t,X(t))\sigma^2\bigg)dt+\partial_2f(t, X(t))\sigma(t) dW(t)$	
+
+	\begin{enumerate} % a, b, c
+		\item $d(X(t))=d(tW(t))=W(t)dt+tdW(t)$ (remember that $\mu(t) = 0$ as W(t) is std Brownian motion)
+	
+		\item $\partial_2 Y(t)=-\frac{W(t)}{(1+t)^2}$
+		\\[5pt] $dY(t)=(1+t)^{-1}dW(t)-\frac{W(t)}{(1+t)^2}dt$$Y(t)=\frac{W(t)}{1+t}$
+	\end{enumerate}
+	
+\item T-Exercise 9 (Exchange rates)
+\\[5pt] $dD(t)=D(t)\mu dt+D(t)\sigma dW(t) 
+\\ E(t):=1/D(t)$
+	\begin{enumerate} % a, b, c
+		\item $E(t)=\frac{1}{D(t)}=f(D(t))$ hence use (3.8) for that: 
+		\\[5pt] $df(X(t))=[f'(X(t))\mu+\frac{1}{2}f''(X(t))\sigma^2]dt+f'(X(t))\sigma dW(t)$ 
+		\\[5pt] $dE(t)=(-D^{-2}(t)\mu (t)+D^{-3}(t)\sigma(t)^2)dt-D^{-2}(t)\sigma(t) dW(t)$
+		\\[5pt] where $\mu (t) = D(t)\mu$ and $\sigma(t) = D(t)\sigma$ from $dD(t)$ process
+		\\[5pt] substitute and get $dE(t) = E(t)\bigg( (\sigma^2 - \mu)dt-\sigma dW(t) \bigg)$ 
+		\\[5pt]
+		
+		\item Use the stochastic exponential for the Ito process 
+		\\[5pt] (3.11) $\mathcal{E}(X)(t)=exp \bigg(\int_0^t (\mu(s) - \frac{1}{2}\sigma^2)ds + \int_0^t \sigma(s)dW(s) \bigg)$ it follows
+		\\[5pt] that for linear SDE $dX(t) = \mu X(t) dt + \sigma X(t) dW(t)$ with $X(0) = x$ and constant $\mu$ and
+		\\[5pt] $\sigma$ can be rephrased as $dX(t)=X(t)dY(t)$ with $Y(t) = \mu t + \sigma W(t)$
+		\\[5pt] using (3.11) we get $X(t)=x\mathcal{E}(Y)(t)=x exp((\frac{1}{2}\sigma^2 -\mu)t-\sigma W(t))$
+		\\
+		\\[5pt] $dD(t)=D(t)\mu dt+D(t)\sigma dW(t) = D(t)(\mu dt + \sigma dW(t)) = D(t)dY(t)$ where 
+		\\[5pt] $dY(t) = \mu dt + \sigma dW(t)$
+		\\[5pt] $D(t)=D(0)\mathcal{E}(Y)(t)=D(0)exp \bigg[ (\mu-\frac{1}{2}\sigma^2)t+\sigma W(t) \bigg]$
+		\\
+		\\[5pt] $E(t)=E(0)\mathcal{E}(Y)(t)=E(0)exp \bigg[ (\frac{1}{2}\sigma^2 - \mu)t - \sigma W(t) \bigg]$
+		\\[5pt] where $dY(t) = (\sigma^2 - \mu)dt-\sigma dW(t)$
+		\\
+		
+		\item Plugin $\mu = \frac{1}{2}\sigma^2$ and we get:
+		\\[5pt] $D(t)=D(0)exp(\sigma W (t))$ and $E(t)=E(0)exp(-\sigma W (t))$
+		\\[5pt] Drift part vanishes, diffusion is symmetric, hence $E_t$ and $D_t$ are symmetric
+		\\[5pt] EV's are the same, so no currency has an advantage
+	\end{enumerate}
+
+\end{enumerate}
+\end{document}

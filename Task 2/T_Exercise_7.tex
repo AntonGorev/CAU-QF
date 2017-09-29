@@ -1,0 +1,50 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\lhead{CompFin, Problem Set 2, T-Exercise 7}
+\chead{}
+\rhead{Quantitative Finance (CAU), SS2017}
+
+
+\begin{document}
+
+\begin{enumerate} % 1, 2, 3
+
+\item
+\begin{enumerate} % a, b, c
+	\item For i = 1,2,3 represent the process $f_i(X(t))$ as an Ito process, i.e. in the form
+	\\[5pt] Use (3.3):  $df(X(t))=f'(X(t))dX(t) + \frac{1}{2}f''(X(t))d[X, X](t) 
+	\\[5pt] df(X(t))=\sum_{i=1}^d\partial_i f(X(t))dX(t)+\frac{1}{2}\sum_{i,j=1}^d\partial_{ij}f(X(t))d[X_i,X_j](t)$
+	\\[5pt] Or (3.8):  $df(X(t))=[f'(X(t))\mu+\frac{1}{2}f''(X(t))\sigma^2]dt+f'(X(t))\sigma dW(t)$
+	\\[5pt] Function depends on both t and X \\
+	\begin{enumerate} % i, ii, iii
+		\item $f_1(x)=x^3 
+		\\[5pt] d(f_1(x))=(3x_t^2\mu(t)+\frac{3 \cdot 2}{2}\sigma^2(t))dt+3x_t^2\sigma(t)dW(t)=(3x_t^2\mu(t)+3\sigma^2(t))dt+3x_t^2\sigma(t)dW(t)$
+		\\
+		\item $f_2(x)=exp(x) 
+		\\[5pt] d(f_2(x))=(exp(x_t)\mu(t)+\frac{1}{2}exp(x_t)\sigma^2(t))dt+exp(x_t)\sigma(t)dW(t)$
+		\\
+		\item $f_3(x)=6x+2 
+		\\[5pt] d(f_3(x))=(6\mu(t)+0)dt+6\sigma(t)dW(t)=6\mu(t)dt+6\sigma(t)dW(t)$
+		\\
+	\end{enumerate}
+
+	\item By $d[X,X](t) = \sigma^2(t)dt$ we just consider diffusion coefficient of previously computed processes
+	\begin{enumerate} % i, ii, iii
+		\item $d[f_1(x),f_1(x)](t) = 9x_t^4\sigma^4(t)dt$ \\
+		\item  $d[f_2(x),f_2(x)](t) = e^{2x}\sigma^2(t)dt$ \\
+		\item  $d[f_3(x),f_2(x)](t) = 36\sigma^2(t)dt$ \\
+	\end{enumerate}
+
+	\item By (3.2) $dX(t)dY(t) = d[X,Y](t)$, and since the quadratic variation of standard Brownian motion W is $[W,W](t) = t$ 
+	it yields to $d[X,Y](t)=\sigma_x(t)\sigma_y(t)dt$
+	\\[5pt] $d[f_1(x),f_3(x)](t) = 3x_t^2 \sigma(t) 6\sigma(t) dt=18x_t^2 \sigma^2(t)dt$
+\end{enumerate}
+
+\end{enumerate}
+\end{document}
