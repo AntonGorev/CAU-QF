@@ -1,7 +1,7 @@
 clc
 clear
 
-function [V0, Veu, S, q] = UpOutPut_BinMod(S0, r, sigma, T, M, B, K)
+function [V0, V_am, S, q] = UpOutPut_BinMod(S0, r, sigma, T, M, B, K)
     
     delta_t = T / M
     
@@ -22,27 +22,22 @@ function [V0, Veu, S, q] = UpOutPut_BinMod(S0, r, sigma, T, M, B, K)
     end
     
     size_S = size(S)
-    Veu = zeros(size_S(1), size_S(2))
     
-    // Calculate option values at maturity
-    for i = 1 : size_S(2)
-        Veu(i, size_S(2)) = max(K - S(i,$), 0) * ...
-                            (S(i, $) < B )      // If barrier is passed, 
-                                                //  option price becomes a zero
-    end
+    V_am = zeros(size_S(1), size_S(2))
     
-    // Calculate option prices through whole tree (European Put)
-    for n = size_S(1):-1:2
-        for k = 1 : n - 1
-            Veu(k, n - 1) = exp(-r * delta_t) * ...
-                            ( (1 - q) * Veu(k, n) + q * Veu(k+1, n) ) * ...
-                            (S(k, n - 1) < B )  // If barrier is passed, 
-                                                //  option price becomes a zero
-        end
+    // Calculate option values at maturity, initial conditions 
+    //  (use 2.16 and Barrier)
+    V_am(:,$) = max( K - S(:, $), 0 ) .* (S(:, $) < B )
+    
+    // Calculate option prices through whole tree (American Put) (use 2.15 for put)
+    for n = size_S(2):-1:2
+        V_am(1 : n - 1, n - 1) = exp(-r * delta_t) * ...
+                                 ( q * V_am(2 : n, n) + (1 - q) * V_am(1 : n - 1, n)).* ...
+                                 (S(1 : n - 1, n - 1) < B )
     end
 
     // Calculate American Put
-    V0 = max(max(K-S0, 0), Veu(1,1))
+    V0 = V_am(1,1)
     
 endfunction
 
@@ -54,9 +49,9 @@ sigma = 0.2
 T = 1
 K = 100
 B = 110
-M = 10
+M = 1000
 
 // Test function and display result
-V0 = UpOutPut_BinMod(S0, r, sigma, T, M, B, K)
-disp("Approximation to the price of an American put option using CRR model is V0 = " ...
+[V0, V_am, S] = UpOutPut_BinMod(S0, r, sigma, T, M, B, K)
+disp("Approximation to the price of an American put option using CRR model with Barrier is V0 = " ...
       + string(V0))

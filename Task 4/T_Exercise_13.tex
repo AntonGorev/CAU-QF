@@ -1,0 +1,47 @@
+\documentclass[11pt]{article}
+
+\usepackage{mathrsfs}
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\lhead{CompFin, Problem Set 4}
+\chead{}
+\rhead{Quantitative Finance (CAU), SS2017}
+
+
+\begin{document}
+
+\begin{enumerate} % 1, 2, 3
+	
+\item T-Exercise 13
+\\[5pt] $dB_t=rB_t dt 
+\\ 	 dS_t=S_t\mu dt+\sigma S_t dW(t)$
+	\begin{enumerate} % a, b, c
+		\item $dS_t=S_t(\mu dt+\sigma dW(t))$ hence use (3.11) stochastic exponential: 
+		\\[5pt] $S_t=S_0 \times exp \bigg[ (\mu-\frac{1}{2}\sigma^2)t+\sigma W(t) \bigg]$ 
+		\\[5pt] $X_t = log(S_t)=log(S_0) + (\mu-\frac{1}{2}\sigma^2)t+\sigma W(t) =
+		\\[5pt] =X_0 + (\mu-\frac{1}{2}\sigma^2)t+\sigma W(t)$ 
+		\\[5pt] it is an Ito process interpreted as an integral equation, see (3.7)
+		\\[5pt] hence $dX_t = (\mu-\frac{1}{2}\sigma^2)dt+\sigma dW(t)$
+		\\[5pt] and then $d[X,X]_t = \sigma^2 dt$ 
+		\\
+		
+		\item $\varphi = (\varphi_t^0, \varphi_t^1)_{t\geq 0}$ with $V_0(\varphi)=1$, investing strategy always $\varphi_t^1=\frac{V_1(\varphi)}{2S_t}$ 
+		\\[5pt] $V_t (\varphi) = \varphi_t^0 S_t^0 + \varphi_t^1 S_t^1 = \varphi_t^0 B_t + \frac{V_t(\varphi)}{2S_t} S_t = \varphi_t^0 B_t + \frac{V_t(\varphi)}{2} $
+		\\[5pt] $\varphi_t^0=\frac{V_t(\varphi)}{B_t}(1- \frac{1}{2})=\frac{V_t(\varphi)}{2B_t}$
+		\\[5pt] by (3.15) $dV_t(\varphi)=\varphi_t dS_t \bigg(= \sum_{i=0}^d \varphi_i(t) dS_i(t) \bigg)$
+		\\[5pt] $dV_t (\varphi) = \varphi_t^0 dB_t + \varphi_t^1 dS_t$
+		\\[5pt] substitute $dS_t$ and $dB_t$
+		\\[5pt] $dV_t (\varphi) = \varphi_t^0 rB_t dt + \varphi_t^1 (\mu S_t dt + \sigma S_t dW_t)$
+		\\[5pt] substitute $\varphi_t^0$ and $\varphi_t^1$
+		\\[5pt] $dV_t(\varphi) = \frac{V_t(\varphi)}{2B_t} rB_t dt + \frac{V_t(\varphi)}{2S_t} (\mu S_t dt + \sigma S_t dW_t)=
+		\\[5pt] = \frac{V_t(\varphi)}{2} ((r+\mu)dt + \sigma dW_t)$ 
+		\\[5pt] this is the form of geometric Brownian Motion
+				
+	\end{enumerate}
+
+\end{enumerate}
+\end{document}
