@@ -24,10 +24,16 @@ gdp_d = d[1]
 
 work_data_diff = data.frame(work_data_diff)
 colnames(work_data_diff) = c("logGDP", colnames(quarterlyFull[-1]))
-write.csv(work_data_diff, 
-          "/Users/antongorev/Dropbox/Study/Seminar/my tests/GDP/work_data_diff.csv")
+#write.csv(work_data_diff, 
+#          "/Users/antongorev/Dropbox/Study/Seminar/my tests/GDP/work_data_diff.csv")
 
 work_data_diff = work_data_diff[-120]
 work_data_diff_ts = ts(work_data_diff, start=c(1964, (1+d)), frequency = 4)
 
-#VARselect(work_data_diff[1:(dim(work_data_diff)[1]-(68)),1:70], lag.max = 20, type="none")
+#VARselect(work_data_diff[1:(dim(work_data_diff)[1]-(68)),], lag.max = 20, type="none")
+lag_wars = lapply(work_data_diff[1:(dim(work_data_diff)[1]-(68)),],VARselect)
+
+p_AIC = NULL
+for(i in 1 : length(lag_wars)){
+  p_AIC = cbind(p_AIC, lag_wars[[i]]$selection[1])
+}
