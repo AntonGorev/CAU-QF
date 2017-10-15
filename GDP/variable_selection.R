@@ -1,23 +1,3 @@
-# Part 2
-################## Use correlation filter to define the subset of ###################
-##################    variable for further feature selection      ###################
-  require(glmnet)
-  
-  ##returns variables from lasso variable selection, use alpha=0 for ridge
-  ezlasso = function(df,yvar,folds=10,trace=F,alpha=1, maxnrvar=10 ){
-    x<-model.matrix(as.formula(paste(yvar,"~.")),data=df)
-    x=x[,-1] ##remove intercept
-    
-    glmnet1<-glmnet::cv.glmnet(x=x,y=df[,yvar],type.measure='mse',nfolds=folds,alpha=alpha)
-    
-    co<-coef(glmnet1,s = "lambda.1se")
-    inds<-which(order(co, decreasing = T) <= maxnrvar)
-    variables<-row.names(co)[inds]
-    variables<-variables[!(variables %in% '(Intercept)')];
-    return( c(yvar,variables));
-  }
-
-
 #################### Stationarity ###########################
 all_var_ts = ts.union(loggdpts, quarterlyts)
 all_var_ts_FULL = ts.union(loggdptsFULL, quat_ts_FULL) # testing
