@@ -1,40 +1,55 @@
-b=0
-for(t in 0:30){
-  h = 1
-  source("/Users/antongorev/Dropbox/Study/Seminar/my tests/GDP/neat_routine.R")
-  rm(list=setdiff(ls(), c("t", "b") ))
-  b=b+1
-}
-
-gdpdfFull = read.csv('/Users/antongorev/Dropbox/Study/Seminar/my tests/GDP/gdp1964.csv', header = TRUE)
+# These dataframe is created just in sake of transparent analisys,
+#  it was useful for me to compare different data_objects
+#gdpdfFull = read.csv('/Users/antongorev/Dropbox/Study/Seminar/my tests/GDP/gdp1964.csv', header = TRUE)
+#loggdptsFULL = ts(log(gdpdfFull[2]), start=c(1964, 1), frequency = 4, names = "logGDP") # For testing purpose
+#loggdptsFULL_diff_df = data.frame(date=as.Date(as.yearqtr(time(diff(loggdptsFULL, differences = 2)))), 
+#                                  diff(loggdptsFULL, differences = 2))
+#write.csv(loggdptsFULL_diff_df, "/Users/antongorev/Dropbox/Study/Seminar/my tests/GDP/loggdptsFULL_diff_df.csv")
 
 loggdptsFULL_diff_df = read.csv("/Users/antongorev/Dropbox/Study/Seminar/my tests/GDP/loggdptsFULL_diff_df.csv", header = TRUE)[2:3]
-
-forecast_result = read.csv("/Users/antongorev/Dropbox/Study/Seminar/my tests/GDP/forecast_result.csv", header = TRUE)[-1]
 
 
 # Print results
 # Just for output h_num viable is introduced (h_num = 1 corresponds to h=1, h_num=3 to h=4, etc)
 h_num = 1
-d = 2
 start_point = 144 + h_num - d # 144 is for 2000 Q1
 df_var_boost_forecast = data.frame(loggdptsFULL_diff_df[start_point:(start_point+(dim(forecast_result)[1])-1),2] , 
                                    forecast_result)
 forecast_ts = ts(df_var_boost_forecast, start=c(2000, 1), frequency = 4)
 
-# x = matrix(c(log(gdpdfFull[143:144,2]), log(gdpdfFull[143:144,2]), log(gdpdfFull[143:144,2]), log(gdpdfFull[143:144,2])), ncol=4)
-component = log(gdpdfFull[start_point:(start_point + dim(df_var_boost_forecast)[1]), 2])
-x = matrix(c(component, component, component, component), ncol=4)
-
 undiff_df = NULL
-# for(i in 1:length(forecast_ts)){
+un_d = d-1
+gdpFullDiff_undiff = diff(log(gdpdfFull[,2]), differences = 1)
+
+component = gdpFullDiff_undiff[start_point:(start_point + (dim(df_var_boost_forecast)[1]-1))]
+x = matrix(c(component, component, component), ncol=4)
+
 for(i in 1:dim(df_var_boost_forecast)[1]){
   temp_ts = ts(df_var_boost_forecast[i,], start=c(2000, 1), frequency = 4)
-  a = as.matrix(x[i:(i+1), ])
-  undiff_ts = diffinv(temp_ts, differences = 2, xi = a)
-  undiff_df = rbind(undiff_df, undiff_ts[(d+1),])
+  #a = as.matrix(x[i:(i+(d-1)), ])
+  a = matrix(x[i:(i+(un_d-1)), ], ncol=4)
+  undiff_ts = diffinv(temp_ts, differences = un_d, xi = a)
+  undiff_df = rbind(undiff_df, undiff_ts[(un_d+1),])
 }
 
+undiff_df = cbind(undiff_df, 
+                  (undiff_df[,1]-undiff_df[,2])^2, 
+                  (undiff_df[,1]-undiff_df[,3])^2, 
+                  (undiff_df[,1]-undiff_df[,4])^2)
+
+MSE_var = mean(undiff_df[,5])
+MSE_gamboost_full = mean(undiff_df[,6])
+MSE_gamboost_y = mean(undiff_df[,7])
+
 undiff_ts = ts(undiff_df, start=c(2000, 1), frequency = 4)
-colnames(undiff_ts) = c("true GDP", "VAR", "VAR + GAMboost(Full)","VAR + GAMboost(Y)")
-print(exp(undiff_ts))
+colnames(undiff_ts) = c("true GDP", "VAR", "VAR + GAMboost(Full)","VAR + GAMboost(Y)", 
+                        "SqE VAR", "SqE GAMBoost(Full)", "SqE GAMBoost(Y)")
+write.csv(undiff_ts, "/Users/antongorev/Dropbox/Study/Seminar/my tests/GDP/log_diff_d1.csv")
+print(undiff_ts)
+
+MSEs = c(MSE_var, MSE_gamboost_full, MSE_gamboost_y)
+names(MSEs) = c("MSE_VAR", "MSE_GAMBoost(Full)", "MSE_GAMboost(Y)")
+
+print(MSEs)
+
+
