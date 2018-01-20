@@ -1,0 +1,49 @@
+\documentclass[11pt]{article}
+
+\usepackage{mathrsfs}
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{enumerate}
+
+\newcommand\myeq{\stackrel{\mathclap{\normalfont\mbox{def}}}{=}}
+
+\chead{Risk Managament, Sheet 3}
+\rhead{QF, WS17/18}
+\lhead{\textbf{Mykhaylo Cherner, \\ 
+Anton Gorev}}
+
+\begin{document}
+
+\noindent
+\textbf{T-Exercise 6}
+	\begin{enumerate}[(a)] % a, b, c
+		\item Show that $VaR_{\alpha}(a \cdot X + b) = a \cdot VaR_{\alpha}(X) + b, \, b \in R, \, a \geq 0$
+		\\[5pt] \textbf{For $a=0$}
+		\\[5pt] $VaR_{\alpha}(0 \cdot X + b) = VaR_{\alpha}(b)=b=0 \cdot VaR_{\alpha}(X) + b $ 
+		\\[8pt] \textbf{For $a>0$}
+		\\[3pt] $VaR_{\alpha}(a \cdot X + b) \myeq inf\{ l:l \in R, \, P(aX+b > l) \leq 1-\alpha \} = 
+		\\[5pt]inf\{ l:l \in R, \, P(X > \frac{l-b}{a}) \leq 1-\alpha \}$
+		\\[5pt] now let $l'=\frac{l-b}{a}$ hence $l=al'+b$ substitute
+		\\[5pt] $VaR_{\alpha}(a \cdot X + b) = inf\{ al'+b \in R, \, P(X < l') \geq \alpha \} =$
+		\\[7pt] $a \cdot \underbrace{ inf\{ l' \in R, \, P(X < l') \geq \alpha \} }_\text{$ VaR_{\alpha}(X) $} + b$ $\,\,\,\,\, \Box$
+			
+		\item Show that $VaR_{\alpha}(-X)=-VaR_{1-\alpha}(X)$
+		\\[5pt] By Definition 1.1 and Remark 1.2.1
+		\\[5pt] $P(X>VaR_{1-\alpha}(X))=1-1+\alpha=\alpha$
+		\\[5pt] put differently 
+		\\[5pt] $P(-X<-VaR_{1-\alpha}(X))=\alpha \,\,$ \textbf{ (1)}
+		\\[8pt] now consider $VaR_{\alpha}(-X)$
+		\\[5pt] again by remark 1.2.1
+		\\[5pt] $P(-X>VaR_{\alpha}(-X))=1-\alpha$
+		\\[5pt] $P(-X<VaR_{\alpha}(-X))=\alpha \,\,$ \textbf{ (2)}
+		\\[5pt] compare (1) and (2)
+		\\[5pt] $P(-X<VaR_{\alpha}(-X))=P(-X<-VaR_{1-\alpha}(X))$
+		\\[5pt] compare lefthand side of "under probability" expressions conclude that
+		\\[5pt] $VaR_{\alpha}(-X)=-VaR_{1-\alpha}(X) \,\,$  $\,\,\,\,\, \Box$
+	
+	\end{enumerate}
+\end{document}

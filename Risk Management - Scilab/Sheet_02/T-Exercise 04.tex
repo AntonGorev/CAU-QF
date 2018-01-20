@@ -1,0 +1,43 @@
+\documentclass[11pt]{article}
+
+\usepackage{mathrsfs}
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+
+\chead{Risk Managament, Sheet 2}
+\rhead{QF, WS17/18}
+\lhead{Anton Gorev}
+
+
+\begin{document}
+
+\noindent
+\textbf{T-Exercise 4}
+\\[5pt] we have \textbf{one} share, 
+\\ risk factor is \textit{yield to maturity}  $Z_n=-\frac{1}{T-t_n}log(P_n)$
+	\begin{enumerate}[(a)] % a, b, c
+		\item $V_n=f(t_n, Z_n)$ which is $P_n$ since there is only one share 
+		\\[5pt] $V_n=exp(Z_n(T-t_n))=exp(Z_n(t_n-T))$ 
+		
+		\item risk factor change: $X_{n+1}=Z_{n+1}-Z_n=-\frac{log(P_{n+1})}{T-t_{n+1}}+\frac{log(P_n)}{T-t_n}=
+			\frac{(T-t_{n+1})log(P_n)-(T-t_n)log(P_{n+1})}{(T-t_{n+1})(T-t_n)}$
+		
+		\item $l_{[n]}=-f(t_{n+1}, Z_n+X_{n+1})+f(t_n, Z_n)=\\
+			-exp\bigg((Z_n+X_{n+1})(t_{n+1}-T) \bigg)+exp\bigg(Z_n(t_n-T)\bigg)=\\
+			-exp\bigg(-(Z_n+X_{n+1})(T-t_{n+1})\bigg)+exp\bigg(-Z_n(T-t_n)\bigg)=\\
+			-exp\bigg(-Z_n(T-t_n-\Delta t) - X_{n+1}(T-t_{n+1})\bigg) + exp\bigg(-Z_n(T-t_n)\bigg)=\\
+			-exp\bigg(-Z_n(T-t_n) + Z_n\Delta t - X_{n+1}(T-t_{n+1})\bigg) + exp\bigg(-Z_n(T-t_n)\bigg)=\\
+			\underbrace{ exp\bigg(-Z_n(T-t_n)\bigg)}_\text{$P_n$} \bigg(1- exp\bigg( - X_{n+1}(T-t_{n+1}) + Z_n\Delta t\bigg) \bigg)$
+		
+		\item $l_{[n]}^{\Delta}(x)=\underbrace{-\bigg(exp(-Z_n(T-t_n)) Z_n\bigg) \Delta t}_\text{$-D_1f(t,Z_n)\Delta t=\frac{\partial f(t,Z_n)}{\partial t} 			\Delta t$} - \underbrace{\bigg(exp(-Z_n(T-t_n)) (t_n-T)x\bigg)}_\text{$D_2f(t,Z_n)x=\frac{\partial f(t,Z_n)}{\partial x} x$}=\\
+			-exp\bigg(-Z_n(T-t_n) \bigg) \bigg( Z_n \Delta t + (t_n-T)x \bigg)=
+			exp\bigg(-Z_n(T-t_n) \bigg) \bigg((T-t_n)x -Z_n \Delta t \bigg)$ 
+			%where $D_1f(t,Z_n)\Delta t = \frac{\partial f(t,Z_n)}{\partial t} \Delta t = -Z_n exp\bigg( -Z_n(T-t_n) \bigg) \Delta t$ \\
+			%$D_2f(t,Z_n)x = \frac{\partial f(t,Z_n)}{\partial x} x = -Z_n exp\bigg( -Z_n(T-t_n) \bigg) \Delta t$
+				
+	\end{enumerate}
+\end{document}
