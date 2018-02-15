@@ -1,0 +1,51 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{amsmath,fullpage,mathpazo,amsfonts,nicefrac,ragged2e,graphicx,epstopdf,bbm}
+\usepackage[absolute,showboxes]{textpos}
+
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand\tab[1][0.5cm]{\hspace*{#1}}
+
+\begin{document}
+// Mykhaylo Cherner // Anton Gorev
+\section*{Risk Management: T-Exercise 09  Solution}
+	\justify By positive homogeneity and translation invariance of the $expected shortfall$ we get: 
+		  $ES_\alpha(L) = -s(ES_\alpha(e^X)-1)$, with $L=-s(e^X -1)$. \\
+		  Since $X \sim N(\mu, \sigma)$ we can replace it by $\mu + \sigma Y$, where $Y \sim N(0, 1)$
+		  has standard normal law. Thus, we are interested in $ES_\alpha (e^{\mu + \sigma Y})$.
+	\begin{eqnarray*}
+		ES_\alpha (e^{\mu + \sigma Y}) &=& \frac{1}{1-\alpha} \int_{q_\alpha(F_Y)}^{\infty} e^{(\mu + \sigma y)} \phi (y) dy \\
+		&=& \frac{1}{1-\alpha} e^\mu \int_{q_\alpha(F_Y)}^{\infty} e^{(\sigma y)} \frac{1}{\sqrt{2 \pi}} exp\Big( - \frac{y^2}{2} \Big) dy \\
+		&=& \frac{1}{1-\alpha} e^\mu \int_{q_\alpha(F_Y)}^{\infty} \frac{1}{\sqrt{2 \pi}} exp\Big( - \frac{y^2 - \sigma y+ \sigma^2}{2} + \frac{\sigma^2}{2} \Big) dy \\
+		&=& \frac{1}{1-\alpha} e^{(\mu + \frac{\sigma^2}{2})}  \int_{q_\alpha(F_Y)}^{\infty} \frac{1}{\sqrt{2 \pi}} exp\Big( - \frac{(y - \sigma)^2}{2} \Big) dy \\
+		&=& \frac{1}{1-\alpha} e^{(\mu + \frac{\sigma^2}{2})}  \int_{q_\alpha(F_Y)}^{\infty} \phi (y + \sigma) dy \\
+		&=& \frac{1}{1-\alpha} e^{(\mu + \frac{\sigma^2}{2})}  \int_{q_\alpha(F_Y) + \sigma}^{\infty} \phi (w) dw \\
+		&=& \frac{e^{(\mu + \frac{\sigma^2}{2})}}{1-\alpha} \Phi ( - \Phi^{-1} (\alpha) - \sigma) \\
+	\end{eqnarray*}
+	\justify Since standard distribution is symmetric, hence: $\Phi^{-1} (1 - \alpha) = - \Phi^{-1} (\alpha)$ \\
+	\justify Therefore, for $ES_\alpha(L) = -s(ES_\alpha(e^X)-1)$ we get:
+	\begin{eqnarray*}
+		ES_\alpha(L) = -s \Big( \frac{e^{(\mu + \frac{\sigma^2}{2})}}{1-\alpha} \Phi ( - \Phi^{-1} (\alpha) - \sigma) - 1 \Big)\\
+	\end{eqnarray*}
+\begin{textblock*}{45mm}(161mm,110mm)
+\noindent
+	\\
+  \textbf{Variable Substitution} 
+	\begin{eqnarray*}
+		w &=& y + \sigma \\
+		\frac{dw}{dy} &=& 1 \\
+		dy &=& dw
+	\end{eqnarray*}
+  \textbf{Bounds}
+	\begin{eqnarray*}
+		y_u &=& \infty \\ 
+		y_l &=& q_\alpha(F_Y) \\
+		w &=& y + \sigma \\
+		w_u &=& \infty \\
+		w_l &=& q_\alpha(F_Y) + \sigma
+	\end{eqnarray*}
+\end{textblock*}
+\end{document}

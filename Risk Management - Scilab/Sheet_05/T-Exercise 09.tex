@@ -1,0 +1,47 @@
+\documentclass[11pt]{article}
+
+\usepackage{mathrsfs}
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{enumerate}
+
+\newcommand\myeq{\stackrel{\mathclap{\normalfont\mbox{def}}}{=}}
+\newcommand\myexmpl{\stackrel{\mathclap{\normalfont\mbox{1.7}}}{=}}
+
+
+\chead{Risk Managament, Sheet 5}
+\rhead{QF, WS17/18}
+\lhead{\textbf{Mykhaylo Cherner, \\ 
+Anton Gorev}}
+
+\begin{document}
+
+\noindent
+\textbf{T-Exercise 9}
+\\[7pt] $L=-s(e^X-1)$, $s>0$, X is normally distributed with $\mu \in R$ and $\sigma > 0$
+\\[5pt] Compute $ES_{\alpha}(L)$ for $\alpha \in (0,1)$
+\\[5pt] First show some prerequisites which will be helpful further:
+\\[5pt] $(\Phi^{-1})'(\alpha)=\frac{1}{\Phi'(\Phi^{-1}(\alpha))}$ this can be shown as follows
+\\[5pt] $\Phi(\Phi^{-1}(\alpha))=\alpha$
+\\[5pt] therefore $\frac{d}{d \alpha}\Phi(\Phi^{-1}(\alpha))=\frac{d}{d \alpha}\alpha=1 \,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,$			(1)
+\\[5pt] and also by chain rule $\frac{d}{d \alpha}\Phi(\Phi^{-1}(\alpha))=\Phi'(\Phi^{-1}(\alpha)) \cdot (\Phi^{-1})'(\alpha) \,\,\,\,\,\,\,\,\,\,\,$		(2)
+\\[5pt] by (1) and (2) $\Phi'(\Phi^{-1}(\alpha)) \cdot (\Phi^{-1})'(\alpha)=1\,$ $\, \Longrightarrow \,$ $\, (\Phi^{-1})'(\alpha)=\frac{1}{\Phi'(\Phi^{-1}(\alpha))}$
+\\[20pt] Now we use Example 1.14 from script, and show it with the rule of contraries:
+\\[5pt] $ES_{\alpha}(L)= \frac{1}{1-\alpha} \int^1_{\alpha}VaR_p(L)dp \,\, {}^{\,!}_{=} \,\, s\bigg(1 - \frac{\exp(\mu + \frac{\sigma^2}{2})}{1-\alpha} 
+	\Phi(-\Phi^{-1}(\alpha)-\sigma) \bigg)$
+\\[5pt] hence we need to show that
+\\[5pt] $s\bigg( (1 - \alpha) - \exp(\mu + \frac{\sigma^2}{2}) \Phi(-\Phi^{-1}(\alpha)-\sigma) \bigg)' \,\, {}^{\,!}_{=} \,\ VaR_{\alpha}(L)$
+\\[5pt] So idea is to take a derivative of $F(L)$ instead of integrating pdf.
+\\[5pt] $s\bigg( (1 - \alpha) - \exp(\mu + \frac{\sigma^2}{2}) \Phi(-\Phi^{-1}(\alpha)-\sigma) \bigg)' = 
+	s\bigg(-1-\exp(\mu + \frac{\sigma^2}{2}) \varphi(-\Phi^{-1}(\alpha)-\sigma) 
+	\underbrace{(-(\Phi^{-1})'(\alpha))}_\text{$-\frac{1}{\Phi'(\Phi^{-1}(\alpha))}$} \bigg)$
+\\[5pt] where $\varphi$ is pdf of standard normal distribution. Substitute $\varphi$ and get
+\\[5pt] $-s\bigg(1-\exp(\mu + \frac{\sigma^2}{2}) \frac{ \frac{1}{\sqrt{2\pi}} \exp(-\frac{(-\Phi^{-1}(\alpha)-\sigma)^2}{2}) }{ \frac{1}{\sqrt{2\pi}} \exp(
+	-\frac{(\Phi^{-1}(\alpha))^2}{2}) } \bigg) = 
+	\underbrace{-s\bigg(1-\exp(\mu-\sigma \Phi^{-1}(\alpha) ) \bigg) \myexmpl - VaR_{\alpha}(L)}_\text{see example 1.7}$ $\,\,\,\,\, \Box$
+
+\end{document}
