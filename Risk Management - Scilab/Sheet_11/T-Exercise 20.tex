@@ -1,0 +1,47 @@
+\documentclass[11pt]{article}
+
+\usepackage{mathrsfs}
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{enumerate}
+
+\newcommand\myeq{\stackrel{\mathclap{\normalfont\mbox{def}}}{=}}
+\newcommand\myexmpl{\stackrel{\mathclap{\normalfont\mbox{1.7}}}{=}}
+
+
+\chead{Risk Managament, Sheet 11}
+\rhead{QF, WS17/18}
+\lhead{\textbf{Mykhaylo Cherner, \\ 
+Anton Gorev}}
+
+\begin{document}
+
+\noindent
+\textbf{T-Exercise 20}
+\\[5pt] Lemma 4.8, proof:
+	\begin{enumerate}[(3)] % a, b, c
+		\item Kendall's Tau:  
+		\\[5pt] $\rho_{\tau}(X_1,X_2)=P((X_1-\tilde{X}_1)(X_2-\tilde{X}_2) > 0)-P((X_1-\tilde{X}_1)(X_2-\tilde{X}_2) < 0)=\\
+		P(X_1-\tilde{X}_1>0, X_2-\tilde{X}_2 > 0)+P(X_1-\tilde{X}_1 < 0, X_2-\tilde{X}_2 < 0) - \\
+		P(X_1-\tilde{X}_1 < 0, X_2-\tilde{X}_2 > 0) - P(X_1-\tilde{X}_1 > 0, X_2-\tilde{X}_2 < 0)=\\
+		\underbrace{P(X_1-\tilde{X}_1 > 0)P(X_2-\tilde{X}_2 > 0)}_\text{since indep.}+P(X_1-\tilde{X}_1 < 0)P(X_2-\tilde{X}_2 < 0)-\\
+		P(X_1-\tilde{X}_1 < 0)P(X_2-\tilde{X}_2 > 0)-P(X_1-\tilde{X}_1 > 0)P(X_2-\tilde{X}_2 < 0) $ \,\,\,\,\,\, (1)
+		\\[5pt] notice that: $P(X_1-\tilde{X}_1 < 0)=\underbrace{P(X_1>\tilde{X}_1)=P(X_1<\tilde{X}_1)}_\text{symm., since same law}=
+		P(X_1-\tilde{X}_1 > 0)$ 
+		\\[5pt] all other components can be done similar way, hence each component in (1) has the same prob., and they all sum up to 1, 			therefore probability of each is $\frac{1}{4}$ \\
+		So for (1) we have $\frac{1}{4}+\frac{1}{4}-\frac{1}{4}-\frac{1}{4}=0 \,\,$ $\,\,\,\,\, \Box$
+		%%%%%%%%%%%%
+		\\[7pt] Spearman's Rho:
+		\\[5pt] $\rho_{S}(X_1,X_2)=\rho_{L}(F_{X_1}(X_1),F_{X_2}(X_2))=
+		\frac{\overbrace{Cov(F_{X_1}(X_1),F_{X_2}(X_2))}^\text{zero, due to indep.}}{\sqrt{var(F_{X_1}(X_1)) var(F_{X_2}(X_2))}}=0$ 
+		\\[5pt] Absence of converse then can be shown like this. Let $X, Z$ are independent and \\
+		$P(Z=1)=P(Z=-1)=0.5$ it follows $\rho_{\tau}(X,XZ)=\rho_{S}(X,XZ)=0$, \\
+		however $X$ and $XZ$ are NOT independent 	$\,\,\,\,\, \Box$	
+		
+	\end{enumerate}
+
+\end{document}
